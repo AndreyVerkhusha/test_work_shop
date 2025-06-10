@@ -47,7 +47,7 @@
             <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link @if(request()->is('products')) active @endif" href="/products">Продукты</a>
+                        <a class="nav-link @if(request()->is('products')) active @endif" href="/products">Товары</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link @if(request()->is('orders')) active @endif" href="/orders">Заказы</a>

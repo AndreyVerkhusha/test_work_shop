@@ -3,7 +3,7 @@
 @section('content')
     <div class="container container-width mt-1">
         <h1 class="mb-4 text-primary fw-bold border-bottom pb-2">
-            📦 Карточка продукта: {{ $product->name }}
+            📦 Карточка товара: #{{ $product->id }}
         </h1>
 
         <div class="card shadow-sm border-0 mb-4">

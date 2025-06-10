@@ -10,10 +10,10 @@
     <div class="container container-width mt-1">
         <div class="d-flex justify-content-between border-bottom align-items-center mb-4">
             <h1 class="text-primary fw-bold">
-                📦 Список продуктов
+                📦 Список товаров
             </h1>
             <a href="{{ route('products.create') }}" class="btn btn-success">
-                <i class="bi bi-plus-lg me-1"></i> Добавить продукт
+                <i class="bi bi-plus-lg me-1"></i> Добавить товар
             </a>
         </div>
 
@@ -40,7 +40,7 @@
                                 <i class="bi bi-eye me-1"></i> Просмотр
                             </a>
 
-                            <form action="{{ route('products.destroy', $product) }}" method="POST" onsubmit="return confirm('Удалить продукт {{ addslashes($product->name) }}?');">
+                            <form action="{{ route('products.destroy', $product) }}" method="POST" onsubmit="return confirm('Удалить товар {{ addslashes($product->name) }}?');">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-sm btn-danger d-flex align-items-center justify-content-center" title="Удалить">
@@ -52,7 +52,7 @@
                 </tr>
             @empty
                 <tr>
-                    <td colspan="4" class="text-center fst-italic text-secondary">Продукты не найдены</td>
+                    <td colspan="4" class="text-center fst-italic text-secondary">Товары не найдены</td>
                 </tr>
             @endforelse
             </tbody>

@@ -3,7 +3,7 @@
 @section('content')
     <div class="container container-width mt-1">
         <h1 class="mb-4 text-success fw-bold border-bottom pb-2">
-            ➕ Создать новый продукт
+            ➕ Создать новый товар
         </h1>
 
         @if ($errors->any())

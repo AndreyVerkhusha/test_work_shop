@@ -40,7 +40,7 @@ class ProductController extends Controller {
         $data['price'] = round($data['price'] * 100);
         $product       = Product::create($data);
 
-        return redirect()->route('products.show', $product)->with('success', 'Продукт успешно создан.');
+        return redirect()->route('products.show', $product)->with('success', 'Товар успешно создан.');
     }
 
     public function show(Product $product) {
@@ -67,6 +67,6 @@ class ProductController extends Controller {
         $product->delete();
 
         return redirect()->back()
-            ->with('success', 'Продукт успешно удалён.');
+            ->with('success', 'Товар успешно удалён.');
     }
 }

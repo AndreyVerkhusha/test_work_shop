@@ -3,12 +3,12 @@
     "info": {
         "title": "Product and Order API",
         "version": "1.0.0",
-        "description": "API для управления продуктами и заказами."
+        "description": "API для управления товарами и заказами."
     },
     "tags": [
         {
             "name": "Products",
-            "description": "Операции с продуктами"
+            "description": "Операции с товарами"
         },
         {
             "name": "Orders",
@@ -19,7 +19,7 @@
         "/products": {
             "get": {
                 "tags": ["Products"],
-                "summary": "Получить список продуктов",
+                "summary": "Получить список товаров",
                 "parameters": [
                     {
                         "name": "page",
@@ -38,7 +38,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Список продуктов с пагинацией",
+                        "description": "Список товаров с пагинацией",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -61,7 +61,7 @@
             },
             "post": {
                 "tags": ["Products"],
-                "summary": "Создать новый продукт",
+                "summary": "Создать новый товар",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -72,7 +72,7 @@
                 },
                 "responses": {
                     "201": {
-                        "description": "Продукт успешно создан",
+                        "description": "Товар успешно создан",
                         "content": {
                             "application/json": {
                                 "schema": { "$ref": "#/components/schemas/Product" }
@@ -85,19 +85,19 @@
         "/products/{product}": {
             "get": {
                 "tags": ["Products"],
-                "summary": "Получить информацию о продукте",
+                "summary": "Получить информацию о товаре",
                 "parameters": [
                     {
                         "name": "product",
                         "in": "path",
                         "required": true,
-                        "description": "ID продукта",
+                        "description": "ID товара",
                         "schema": { "type": "integer" }
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "Информация о продукте",
+                        "description": "Информация о товаре",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -117,13 +117,13 @@
             },
             "patch": {
                 "tags": ["Products"],
-                "summary": "Обновить продукт",
+                "summary": "Обновить товар",
                 "parameters": [
                     {
                         "name": "product",
                         "in": "path",
                         "required": true,
-                        "description": "ID продукта",
+                        "description": "ID товара",
                         "schema": { "type": "integer" }
                     }
                 ],
@@ -137,7 +137,7 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Продукт обновлён",
+                        "description": "Товар обновлён",
                         "content": {
                             "application/json": {
                                 "schema": { "$ref": "#/components/schemas/Product" }
@@ -148,19 +148,19 @@
             },
             "delete": {
                 "tags": ["Products"],
-                "summary": "Удалить продукт",
+                "summary": "Удалить товар",
                 "parameters": [
                     {
                         "name": "product",
                         "in": "path",
                         "required": true,
-                        "description": "ID продукта",
+                        "description": "ID товара",
                         "schema": { "type": "integer" }
                     }
                 ],
                 "responses": {
                     "204": {
-                        "description": "Продукт успешно удалён"
+                        "description": "Товар успешно удалён"
                     }
                 }
             }
@@ -264,7 +264,7 @@
         "/orders/{order}/increment-quantity": {
             "post": {
                 "tags": ["Orders"],
-                "summary": "Увеличить количество продукта в заказе",
+                "summary": "Увеличить количество товара в заказе",
                 "parameters": [
                     {
                         "name": "order",
@@ -276,7 +276,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Количество продукта увеличено",
+                        "description": "Количество товара увеличено",
                         "content": {
                             "application/json": {
                                 "schema": { "$ref": "#/components/schemas/Order" }
@@ -289,7 +289,7 @@
         "/orders/{order}/decrement-quantity": {
             "post": {
                 "tags": ["Orders"],
-                "summary": "Уменьшить количество продукта в заказе",
+                "summary": "Уменьшить количество товара в заказе",
                 "parameters": [
                     {
                         "name": "order",
@@ -301,7 +301,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Количество продукта уменьшено",
+                        "description": "Количество товара уменьшено",
                         "content": {
                             "application/json": {
                                 "schema": { "$ref": "#/components/schemas/Order" }
@@ -318,8 +318,8 @@
                 "type": "object",
                 "properties": {
                     "id": { "type": "integer", "example": 1 },
-                    "name": { "type": "string", "example": "Продукт 1" },
-                    "description": { "type": "string", "example": "Описание продукта" },
+                    "name": { "type": "string", "example": "Товар 1" },
+                    "description": { "type": "string", "example": "Описание товара" },
                     "price": { "type": "integer", "description": "Цена в копейках", "example": 1999 },
                     "category_id": { "type": "integer", "example": 2 },
                     "created_at": { "type": "string", "format": "date-time" },
@@ -338,8 +338,8 @@
             "ProductCreateRequest": {
                 "type": "object",
                 "properties": {
-                    "name": { "type": "string", "example": "Новый продукт" },
-                    "description": { "type": "string", "example": "Описание продукта" },
+                    "name": { "type": "string", "example": "Новый товар" },
+                    "description": { "type": "string", "example": "Описание товара" },
                     "price": { "type": "number", "format": "float", "example": 19.99 },
                     "category_id": { "type": "integer", "example": 2 }
                 },
@@ -348,8 +348,8 @@
             "ProductUpdateRequest": {
                 "type": "object",
                 "properties": {
-                    "name": { "type": "string", "example": "Обновлённый продукт" },
-                    "description": { "type": "string", "example": "Описание продукта" },
+                    "name": { "type": "string", "example": "Обновлённый товар" },
+                    "description": { "type": "string", "example": "Описание товара" },
                     "price": { "type": "number", "format": "float", "example": 29.99 },
                     "category_id": { "type": "integer", "example": 3 }
                 }

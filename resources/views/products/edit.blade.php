@@ -3,7 +3,7 @@
 @section('content')
     <div class="container container-width mt-1">
         <h1 class="mb-4 text-primary fw-bold border-bottom pb-2">
-            ✏️ Редактировать продукт: {{ $product->name }}
+            ✏️ Редактировать товар: {{ $product->name }}
         </h1>
 
         @if ($errors->any())
