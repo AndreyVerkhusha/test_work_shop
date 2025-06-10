@@ -21,4 +21,3 @@ class Order extends BaseModel {
         return $this->totalPrice();
     }
 }
-

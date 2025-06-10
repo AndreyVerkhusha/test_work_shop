@@ -9,17 +9,15 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Product>
  */
-class ProductFactory extends Factory
-{
+class ProductFactory extends Factory {
     public $model = Product::class;
 
-    public function definition()
-    {
+    public function definition() {
         return [
-            'name' => $this->faker->words(3, true),
+            'name'        => $this->faker->words(3, true),
             'category_id' => Category::inRandomOrder()->first()->id ?? Category::factory(),
             'description' => $this->faker->paragraph(),
-            'price' => $this->faker->numberBetween(100, 100000)
+            'price'       => $this->faker->numberBetween(100, 100000),
         ];
     }
 }

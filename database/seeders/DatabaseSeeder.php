@@ -7,15 +7,13 @@ use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Database\Seeder;
 
-class DatabaseSeeder extends Seeder
-{
+class DatabaseSeeder extends Seeder {
     /**
      * Seed the application's database.
      *
      * @return void
      */
-    public function run()
-    {
+    public function run() {
         $categories = ['light', 'fragile', 'heavy'];
 
         foreach ($categories as $name) {

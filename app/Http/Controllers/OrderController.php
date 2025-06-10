@@ -7,19 +7,17 @@ use App\Http\Resources\OrderResource;
 use App\Models\Order;
 
 class OrderController extends Controller {
-
     public function index(OrderRequest $request) {
-        $page = $request->query('page', 1);
+        $page    = $request->query('page', 1);
         $perPage = $request->query('perPage', 10);
-        $orders = Order::with('product')
+        $orders  = Order::with('product')
             ->orderBy('created_at', 'desc')
             ->paginate($perPage, ['*'], 'page', $page);
 
         $ordersResource = OrderResource::collection($orders);
 
-
         return view('orders.index', [
-            'orders' => $ordersResource
+            'orders' => $ordersResource,
         ]);
     }
 
