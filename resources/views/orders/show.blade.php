@@ -39,6 +39,9 @@
                     <dt class="col-sm-3 text-muted fw-semibold">Количество товаров</dt>
                     <dd class="col-sm-9 fs-6">{{ $order->quantity }}</dd>
 
+                    <dt class="col-sm-3 text-muted fw-semibold">Наименование товара</dt>
+                    <dd class="col-sm-9 fs-6">{{ $order->product->name }}</dd>
+
                     <dt class="col-sm-3 text-muted fw-semibold">Итоговая цена</dt>
                     <dd class="col-sm-9 fs-6 text-success fw-bold">
                         {{ number_format($order->totalPrice / 100, 2, ',', ' ') }} ₽
@@ -64,6 +67,10 @@
                     <i class="bi bi-check-circle me-1"></i> Отметить как выполнен
                 </button>
             </form>
+
+            <a href="{{ route('orders.edit', $order->id) }}" class="btn btn-outline-secondary">
+                <i class="bi bi-arrow-left me-1"></i> Редактировать
+            </a>
 
             <a href="{{ route('orders.index') }}" class="btn btn-outline-secondary">
                 <i class="bi bi-arrow-left me-1"></i> Назад к списку заказов

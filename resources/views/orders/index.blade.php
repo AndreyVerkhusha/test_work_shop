@@ -6,6 +6,9 @@
             <h1 class="text-primary fw-bold">
                 📦 Список заказов
             </h1>
+            <a href="{{ route('orders.create') }}" class="btn btn-success">
+                <i class="bi bi-plus-lg me-1"></i> Добавить заказ
+            </a>
         </div>
 
         <table class="table table-hover table-bordered align-middle shadow-sm">

@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\OrderRequest;
+use App\Http\Requests\Order\OrderCreateRequest;
+use App\Http\Requests\Order\OrderRequest;
+use App\Http\Requests\Order\OrderUpdateRequest;
 use App\Http\Resources\OrderResource;
 use App\Models\Order;
+use App\Models\Product;
 
 class OrderController extends Controller {
     public function index(OrderRequest $request) {
@@ -51,5 +54,32 @@ class OrderController extends Controller {
 
     public function show(Order $order) {
         return view('orders.show', compact('order'));
+    }
+
+    public function create() {
+        $products = Product::all();
+
+        return view('orders.create', compact('products'));
+    }
+
+    public function store(OrderCreateRequest $request) {
+        $data  = $request->validated();
+        $order = Order::create($data);
+
+        return view('orders.show', compact('order'));
+    }
+
+    public function edit(Order $order) {
+        $products = Product::all();
+
+        return view('orders.edit', compact('products', 'order'));
+    }
+
+    public function update(OrderUpdateRequest $request, Order $order) {
+        $data = $request->validated();
+        $order->update($data);
+        $orderResource = new OrderResource($order);
+
+        return redirect()->route('orders.show', $orderResource);
     }
 }

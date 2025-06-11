@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ProductCreateRequest;
-use App\Http\Requests\ProductRequest;
-use App\Http\Requests\ProductUpdateRequest;
+use App\Http\Requests\Product\ProductCreateRequest;
+use App\Http\Requests\Product\ProductRequest;
+use App\Http\Requests\Product\ProductUpdateRequest;
 use App\Http\Resources\ProductResource;
 use App\Models\Category;
 use App\Models\Product;
