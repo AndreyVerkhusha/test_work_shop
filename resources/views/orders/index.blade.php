@@ -1,5 +1,11 @@
 @extends('layout')
 
+@if(session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif
+
 @section('content')
     <div class="container container-width mt-1">
         <div class="d-flex justify-content-between border-bottom align-items-center mb-4">
@@ -61,9 +67,22 @@
                         {{ number_format($order->totalPrice / 100, 2, ',', ' ') }} ₽
                     </td>
                     <td class="text-center">
-                        <a href="{{ route('orders.show', $order->id) }}" class="btn btn-sm btn-primary me-2" title="Просмотреть">
-                            <i class="bi bi-eye"></i> Просмотреть
-                        </a>
+                        <div class="d-flex justify-content-center gap-2">
+                            <a href="{{ route('orders.show', $order->id) }}" class="btn btn-sm btn-primary me-2" title="Просмотреть">
+                                <i class="bi bi-eye"></i> Просмотр
+                            </a>
+
+                            <form action="{{ route('orders.destroy', $order) }}" method="POST" onsubmit="return confirm('Удалить заказ {{ addslashes($order->id) }}?');">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-sm btn-danger d-flex align-items-center justify-content-center" title="Удалить">
+                                    <i class="bi bi-trash me-1"></i> Удалить
+                                </button>
+                            </form>
+                        </div>
+
+
+
                     </td>
                 </tr>
             @empty

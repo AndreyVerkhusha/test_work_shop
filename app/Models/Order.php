@@ -5,7 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Order extends BaseModel {
-    use SoftDeletes;
 
     protected $fillable = ['full_name', 'status', 'comment', 'product_id', 'quantity'];
 

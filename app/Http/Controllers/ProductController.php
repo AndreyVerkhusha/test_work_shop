@@ -8,21 +8,27 @@ use App\Http\Requests\Product\ProductUpdateRequest;
 use App\Http\Resources\ProductResource;
 use App\Models\Category;
 use App\Models\Product;
+use App\Service\ProductService;
 
 class ProductController extends Controller {
+    public $productService;
+
+    public function __construct(ProductService $productService) {
+        $this->productService = $productService;
+    }
+
     public function index(ProductRequest $request) {
-        $page     = $request->query('page', 1);
-        $perPage  = $request->query('perPage', 10);
-        $products = Product::orderBy('created_at', 'desc')
-            ->paginate($perPage, ['*'], 'page', $page);
+        $page = $request->query('page', 1);
+        $perPage = $request->query('perPage', 10);
+        $products = $this->productService->index($perPage, $page);
 
         // Сейчас используется в вёрстке для пагинации встроенный метод {{ $products->links() }}, но это просто для удобства.
         // В реальной практике по-хорошему, для фронта нужен будет примерно такой ответ в формате JSON:
         $data = [
-            'data'           => ProductResource::collection($products),
-            'current_page'   => $page,
-            'per_page'       => $perPage,
-            'total_page'     => $products->lastPage(),
+            'data' => ProductResource::collection($products),
+            'current_page' => $page,
+            'per_page' => $perPage,
+            'total_page' => $products->lastPage(),
             'total_products' => $products->total(),
         ];
 
@@ -30,41 +36,37 @@ class ProductController extends Controller {
     }
 
     public function create() {
-        $categories = Category::all();
+        $categories = $this->productService->getAllCategories();
 
         return view('products.create', compact('categories'));
     }
 
     public function store(ProductCreateRequest $request) {
-        $data          = $request->validated();
-        $data['price'] = round($data['price'] * 100);
-        $product       = Product::create($data);
+        $product = $this->productService->store($request);
 
         return redirect()->route('products.show', $product)->with('success', 'Товар успешно создан.');
     }
 
     public function show(Product $product) {
-        $categories = Category::all();
+        $categories = $this->productService->getAllCategories();
 
         return view('products.show', compact('product', 'categories'));
     }
 
     public function edit(Product $product) {
-        $categories = Category::all();
+        $categories = $this->productService->getAllCategories();
 
         return view('products.edit', compact('product', 'categories'));
     }
 
     public function update(ProductUpdateRequest $request, Product $product) {
-        $data          = $request->validated();
-        $data['price'] = round($data['price'] * 100);
-        $product->update($data);
+        $product = $this->productService->update($request, $product);
 
         return redirect()->route('products.show', $product);
     }
 
     public function destroy(Product $product) {
-        $product->delete();
+        $this->productService->destroy($product);
 
         return redirect()->back()
             ->with('success', 'Товар успешно удалён.');

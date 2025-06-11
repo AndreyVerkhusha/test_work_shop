@@ -19,7 +19,6 @@ return new class extends Migration {
             $table->unsignedBigInteger('price');  // цена будет в копейках
 
             $table->timestamps();
-            $table->softDeletes();
             $table->engine = 'InnoDB';
         });
     }

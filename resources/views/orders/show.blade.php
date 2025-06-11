@@ -35,22 +35,24 @@
                             <span class="badge bg-secondary">Новый</span>
                         @endif
                     </dd>
+                    <dt class="col-sm-3 text-muted fw-semibold">Наименование товара</dt>
+                    <dd class="col-sm-9 fs-6">{{ $order->product->name }}</dd>
 
                     <dt class="col-sm-3 text-muted fw-semibold">Количество товаров</dt>
                     <dd class="col-sm-9 fs-6">{{ $order->quantity }}</dd>
 
-                    <dt class="col-sm-3 text-muted fw-semibold">Наименование товара</dt>
-                    <dd class="col-sm-9 fs-6">{{ $order->product->name }}</dd>
-
-                    <dt class="col-sm-3 text-muted fw-semibold">Итоговая цена</dt>
-                    <dd class="col-sm-9 fs-6 text-success fw-bold">
-                        {{ number_format($order->totalPrice / 100, 2, ',', ' ') }} ₽
-                    </dd>
+                    <dt class="col-sm-3 text-muted fw-semibold">Категория товара</dt>
+                    <dd class="col-sm-9 fs-6">{{ __('categories.' . $order->product->category->name) }}</dd>
 
                     @if(!empty($order->comment))
                         <dt class="col-sm-3 text-muted fw-semibold">Комментарий покупателя</dt>
                         <dd class="col-sm-9 fs-6">{{ $order->comment }}</dd>
                     @endif
+
+                    <dt class="col-sm-3 text-muted fw-semibold">Итоговая цена</dt>
+                    <dd class="col-sm-9 fs-6 text-success fw-bold">
+                        {{ number_format($order->totalPrice / 100, 2, ',', ' ') }} ₽
+                    </dd>
                 </dl>
             </div>
         </div>

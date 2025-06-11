@@ -8,16 +8,20 @@ use App\Http\Requests\Order\OrderUpdateRequest;
 use App\Http\Resources\OrderResource;
 use App\Models\Order;
 use App\Models\Product;
+use App\Service\OrderService;
 
 class OrderController extends Controller {
-    public function index(OrderRequest $request) {
-        $page    = $request->query('page', 1);
-        $perPage = $request->query('perPage', 10);
-        $orders  = Order::with('product')
-            ->orderBy('created_at', 'desc')
-            ->paginate($perPage, ['*'], 'page', $page);
+    public $orderService;
 
-        $ordersResource = OrderResource::collection($orders);
+    public function __construct(OrderService $orderService) {
+        $this->orderService = $orderService;
+    }
+
+    public function index(OrderRequest $request) {
+        $page = $request->query('page', 1);
+        $perPage = $request->query('perPage', 10);
+
+        $ordersResource = $this->orderService->index($perPage, $page);
 
         return view('orders.index', [
             'orders' => $ordersResource,
@@ -25,15 +29,13 @@ class OrderController extends Controller {
     }
 
     public function incrementQuantity(Order $order) {
-        $order->increment('quantity');
+        $this->orderService->incrementQuantity($order);
 
         return redirect()->back();
     }
 
     public function decrementQuantity(Order $order) {
-        if ($order->quantity > 1) {
-            $order->decrement('quantity');
-
+        if ($this->orderService->decrementQuantity($order)) {
             return redirect()->back();
         }
 
@@ -41,9 +43,7 @@ class OrderController extends Controller {
     }
 
     public function complete(Order $order) {
-        if ($order->status !== 'completed') {
-            $order->update(['status' => 'completed']);
-
+        if ($this->orderService->complete($order)) {
             return redirect()->route('orders.show', $order)
                 ->with('success', 'Статус заказа обновлён на "выполнен".');
         }
@@ -57,29 +57,34 @@ class OrderController extends Controller {
     }
 
     public function create() {
-        $products = Product::all();
+        $products = $this->orderService->getAllProducts();
 
         return view('orders.create', compact('products'));
     }
 
     public function store(OrderCreateRequest $request) {
-        $data  = $request->validated();
-        $order = Order::create($data);
+        $order = $this->orderService->store($request);
 
         return view('orders.show', compact('order'));
     }
 
     public function edit(Order $order) {
-        $products = Product::all();
+        $products = $this->orderService->getAllProducts();
 
         return view('orders.edit', compact('products', 'order'));
     }
 
     public function update(OrderUpdateRequest $request, Order $order) {
-        $data = $request->validated();
-        $order->update($data);
+        $order = $this->orderService->update($request, $order);
         $orderResource = new OrderResource($order);
 
         return redirect()->route('orders.show', $orderResource);
+    }
+
+    public function destroy(Order $order) {
+        $this->orderService->destroy($order);
+
+        return redirect()->back()
+            ->with('success', 'Заказ успешно удалён.');
     }
 }
