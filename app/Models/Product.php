@@ -3,7 +3,6 @@
 namespace App\Models;
 
 class Product extends BaseModel {
-
     protected $fillable = ['name', 'category_id', 'description', 'price'];
 
     public function category() {

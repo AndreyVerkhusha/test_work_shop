@@ -18,14 +18,14 @@ class ProductService {
     }
 
     public function store(ProductCreateRequest $request) {
-        $data = $request->validated();
+        $data          = $request->validated();
         $data['price'] = round($data['price'] * 100);
 
         return Product::create($data);
     }
 
     public function update(ProductUpdateRequest $request, Product $product) {
-        $data = $request->validated();
+        $data          = $request->validated();
         $data['price'] = round($data['price'] * 100);
 
         $product->update($data);

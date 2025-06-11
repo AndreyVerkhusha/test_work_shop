@@ -21,6 +21,7 @@ class OrderService {
     public function decrementQuantity(Order $order) {
         if ($order->quantity > 1) {
             $order->decrement('quantity');
+
             return true;
         }
 
@@ -30,6 +31,7 @@ class OrderService {
     public function complete(Order $order): bool {
         if ($order->status !== 'completed') {
             $order->update(['status' => 'completed']);
+
             return true;
         }
 

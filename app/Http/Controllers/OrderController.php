@@ -7,7 +7,6 @@ use App\Http\Requests\Order\OrderRequest;
 use App\Http\Requests\Order\OrderUpdateRequest;
 use App\Http\Resources\OrderResource;
 use App\Models\Order;
-use App\Models\Product;
 use App\Service\OrderService;
 
 class OrderController extends Controller {
@@ -18,7 +17,7 @@ class OrderController extends Controller {
     }
 
     public function index(OrderRequest $request) {
-        $page = $request->query('page', 1);
+        $page    = $request->query('page', 1);
         $perPage = $request->query('perPage', 10);
 
         $ordersResource = $this->orderService->index($perPage, $page);
@@ -75,7 +74,7 @@ class OrderController extends Controller {
     }
 
     public function update(OrderUpdateRequest $request, Order $order) {
-        $order = $this->orderService->update($request, $order);
+        $order         = $this->orderService->update($request, $order);
         $orderResource = new OrderResource($order);
 
         return redirect()->route('orders.show', $orderResource);
