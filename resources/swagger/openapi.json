@@ -207,6 +207,28 @@
                         }
                     }
                 }
+            },
+            "post": {
+                "tags": ["Orders"],
+                "summary": "Создать новый заказ",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": { "$ref": "#/components/schemas/OrderCreateRequest" }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Заказ успешно создан",
+                        "content": {
+                            "application/json": {
+                                "schema": { "$ref": "#/components/schemas/Order" }
+                            }
+                        }
+                    }
+                }
             }
         },
         "/orders/{order}": {
@@ -230,6 +252,37 @@
                                 "schema": {
                                     "$ref": "#/components/schemas/Order"
                                 }
+                            }
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "tags": ["Orders"],
+                "summary": "Обновить заказ",
+                "parameters": [
+                    {
+                        "name": "order",
+                        "in": "path",
+                        "required": true,
+                        "description": "ID заказа",
+                        "schema": { "type": "integer" }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": { "$ref": "#/components/schemas/OrderUpdateRequest" }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Заказ обновлён",
+                        "content": {
+                            "application/json": {
+                                "schema": { "$ref": "#/components/schemas/Order" }
                             }
                         }
                     }
@@ -368,6 +421,27 @@
                     "deleted_at": { "type": "string", "format": "date-time", "nullable": true }
                 },
                 "required": ["id", "full_name", "status", "product_id", "quantity"]
+            },
+            "OrderCreateRequest": {
+                "type": "object",
+                "properties": {
+                    "full_name": { "type": "string", "example": "Иван Иванов" },
+                    "status": { "type": "string", "example": "new" },
+                    "comment": { "type": "string", "nullable": true, "example": "Просьба позвонить перед доставкой" },
+                    "product_id": { "type": "integer", "example": 1 },
+                    "quantity": { "type": "integer", "default": 1, "example": 2 }
+                },
+                "required": ["full_name", "product_id"]
+            },
+            "OrderUpdateRequest": {
+                "type": "object",
+                "properties": {
+                    "full_name": { "type": "string", "example": "Иван Иванов" },
+                    "status": { "type": "string", "example": "processing" },
+                    "comment": { "type": "string", "nullable": true, "example": "Изменённый комментарий" },
+                    "product_id": { "type": "integer", "example": 1 },
+                    "quantity": { "type": "integer", "example": 3 }
+                }
             }
         }
     }
